@@ -27,17 +27,33 @@ function Home() {
     fetchTasks();
   }, []);
 
-  const fetchTasks = async () => {
-    try {
-      setFetching(true);
-      const res = await getTasks();
+const fetchTasks = async () => {
+  try {
+    setFetching(true);
+
+    const res = await getTasks();
+
+    console.log("API Response:", res);
+
+    // Handle different API response shapes safely
+    if (Array.isArray(res)) {
+      setTasks(res);
+    } else if (Array.isArray(res?.data)) {
       setTasks(res.data);
-    } catch (error) {
-      toast.error("Failed to load tasks");
-    } finally {
-      setFetching(false);
+    } else if (Array.isArray(res?.tasks)) {
+      setTasks(res.tasks);
+    } else {
+      setTasks([]);
+      console.error("Unexpected API response:", res);
     }
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to load tasks");
+    setTasks([]);
+  } finally {
+    setFetching(false);
+  }
+};
 
   const handleSubmit = async (formData) => {
     try {
@@ -87,17 +103,17 @@ function Home() {
     }
   };
 
-  const filteredTasks = tasks.filter((task) => {
-    const keyword = searchTerm.toLowerCase();
+const filteredTasks = (tasks ?? []).filter((task) => {
+  const keyword = searchTerm.toLowerCase();
 
-    const matchesSearch =
-      task.title.toLowerCase().includes(keyword) ||
-      task.description.toLowerCase().includes(keyword);
+  const matchesSearch =
+    task.title?.toLowerCase().includes(keyword) ||
+    task.description?.toLowerCase().includes(keyword);
 
-    const matchesFilter = filter === "All" || task.status === filter;
+  const matchesFilter = filter === "All" || task.status === filter;
 
-    return matchesSearch && matchesFilter;
-  });
+  return matchesSearch && matchesFilter;
+});
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 antialiased selection:bg-blue-500/10 selection:text-blue-600">
@@ -152,6 +168,7 @@ function Home() {
                 tasks={filteredTasks}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                onToggleStatus={handleToggleStatus}
               />
             </div>
           )}
