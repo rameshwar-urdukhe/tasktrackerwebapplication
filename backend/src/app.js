@@ -2,13 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const taskRoutes = require("./routes/task.routes");
-
-
-const app = express();
-
-const express = require("express");
-const cors = require("cors");
-
 const app = express();
 
 app.use(
@@ -16,6 +9,7 @@ app.use(
     origin: "https://tasktrackerwebapplication.vercel.app",
   }),
 );
+
 app.use(express.json());
 app.use(morgan("dev"));
 
