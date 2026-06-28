@@ -33,7 +33,7 @@ const fetchTasks = async () => {
 
     const res = await getTasks();
 
-    console.log("API Response:", res);
+    // console.log("API Response:", res);
 
     // Handle different API response shapes safely
     if (Array.isArray(res)) {
