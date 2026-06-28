@@ -14,6 +14,7 @@ const allowedOrigins = [
 
 app.use(
   cors({
+<<<<<<< HEAD
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
 
@@ -23,6 +24,12 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
+=======
+    origin: [
+      "http://localhost:5173",
+      "https://tasktrackerwebapplication.vercel.app/",
+    ],
+>>>>>>> de386277bfca7f075f545fea764189118e342fdd
     credentials: true,
   }),
 );
