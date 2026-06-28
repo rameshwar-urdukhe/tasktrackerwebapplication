@@ -7,7 +7,15 @@ const taskRoutes = require("./routes/task.routes");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://task-tracker-app-mern-topaz.vercel.app/",
+    ],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(morgan("dev"));
 
