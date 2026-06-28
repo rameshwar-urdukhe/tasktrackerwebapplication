@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://task-tracker-app-mern-topaz.vercel.app/",
+      "https://task-tracker-app-l861.onrender.com/api",
     ],
     credentials: true,
   }),
